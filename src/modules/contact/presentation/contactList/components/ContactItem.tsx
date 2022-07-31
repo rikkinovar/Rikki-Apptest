@@ -22,7 +22,7 @@ const ContactItem = (props: Props) => {
 
   return (
     <View style={styles.containerItem}>
-      {photo !== 'N/A' ? (
+      {photo !== 'N/A' || !photo ? (
         <Avatar.Image source={{uri: photo}} size={50} />
       ) : (
         <Avatar.Text

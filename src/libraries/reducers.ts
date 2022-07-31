@@ -1,6 +1,6 @@
 import {combineReducers} from 'redux';
 import {CLEAR_NETWORK_FAIL, SEND_NETWORK_FAIL} from './actions';
-import {getContact} from '../modules/contact/data/contact.reducer';
+import {getContact, addContact} from '../modules/contact/data/contact.reducer';
 
 export interface State {
   fetching: boolean;
@@ -30,5 +30,5 @@ const sendNetworkFail = (state: State = initialState, action: Action) => {
   }
 };
 
-const rootReducer = combineReducers({sendNetworkFail, getContact});
+const rootReducer = combineReducers({sendNetworkFail, getContact, addContact});
 export default rootReducer;

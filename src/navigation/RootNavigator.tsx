@@ -7,7 +7,7 @@ import ContactFormScreen from '../modules/contact/presentation/contactForm/Conta
 
 export type StackParamList = {
   ContactListScreen: undefined;
-  ContactFormScreen: IContact | undefined;
+  ContactFormScreen: {data: IContact | undefined};
 };
 
 const Stack = createStackNavigator<StackParamList>();

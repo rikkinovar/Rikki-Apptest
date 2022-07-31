@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import {Colors, FAB} from 'react-native-paper';
+import {FAB} from 'react-native-paper';
 import type {StackNavigationProp} from '@react-navigation/stack';
 import {StackParamList} from '../../../../navigation/RootNavigator';
 import {useNavigation} from '@react-navigation/native';
@@ -21,7 +21,7 @@ const ContactListScreen = () => {
         icon="plus"
         style={styles.fab}
         onPress={() => {
-          navigate('ContactFormScreen');
+          navigate('ContactFormScreen', {data: undefined});
         }}
       />
     </View>
@@ -39,7 +39,6 @@ const styles = StyleSheet.create({
     margin: 16,
     right: 0,
     bottom: 0,
-    backgroundColor: Colors.green400,
   },
 });
 

@@ -29,9 +29,12 @@ const ContactList = (props: Props) => {
     <ActivityIndicator color={Colors.blue400} animating />
   ) : (
     <FlatList
+      keyExtractor={item => item.id}
       data={getContact.data}
       renderItem={({item, index}) => <ContactItem key={index} {...item} />}
       showsVerticalScrollIndicator={false}
+      refreshing={getContact.fetching}
+      onRefresh={() => onCallApi(getContactRequest())}
     />
   );
 };
