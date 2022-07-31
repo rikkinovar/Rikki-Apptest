@@ -1,12 +1,10 @@
 import React from 'react';
-import {FlatList, StyleSheet, View} from 'react-native';
-import {useContact} from '../../application/useContact';
-import {IContact} from '../../domain/contactEntities';
-import ContactItem from './components/ContactItem';
+import {StyleSheet, View} from 'react-native';
 import {Colors, FAB} from 'react-native-paper';
 import type {StackNavigationProp} from '@react-navigation/stack';
 import {StackParamList} from '../../../../navigation/RootNavigator';
 import {useNavigation} from '@react-navigation/native';
+import ContactListContainer from './container/ContactListContainer';
 
 type ContactNavigationProp = StackNavigationProp<
   StackParamList,
@@ -14,33 +12,11 @@ type ContactNavigationProp = StackNavigationProp<
 >;
 
 const ContactListScreen = () => {
-  const {getContactList} = useContact();
-  const [data, setData] = React.useState<IContact[]>([]);
-
   const {navigate} = useNavigation<ContactNavigationProp>();
-
-  React.useEffect(() => {
-    const fetchContact = async () => {
-      const listContact = await getContactList();
-      if (listContact) {
-        setData(listContact);
-      }
-    };
-    fetchContact().catch(err => console.log(err));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const renderItem = ({item}: {item: IContact}) => {
-    return <ContactItem {...item} />;
-  };
 
   return (
     <View style={styles.container}>
-      <FlatList
-        data={data}
-        renderItem={renderItem}
-        showsVerticalScrollIndicator={false}
-      />
+      <ContactListContainer />
       <FAB
         icon="plus"
         style={styles.fab}
@@ -54,6 +30,7 @@ const ContactListScreen = () => {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     paddingVertical: 16,
     paddingHorizontal: 16,
   },
