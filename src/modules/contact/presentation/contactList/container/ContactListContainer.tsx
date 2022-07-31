@@ -3,6 +3,7 @@ import ContactList from '../components/ContactList';
 
 const mapStateToProps = (state: any) => ({
   getContact: state.getContact,
+  deleteContact: state.deleteContact,
 });
 
 const mapDispatchToProps = (dispatch: any) => ({

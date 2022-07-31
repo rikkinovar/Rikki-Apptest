@@ -3,6 +3,7 @@ import ContactForm from '../components/ContactForm';
 
 const mapStateToProps = (state: any) => ({
   addContact: state.addContact,
+  updateContact: state.updateContact,
 });
 
 const mapDispatchToProps = (dispatch: any) => ({

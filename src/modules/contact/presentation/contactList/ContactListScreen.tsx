@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingVertical: 16,
     paddingHorizontal: 16,
+    backgroundColor: 'white',
   },
   fab: {
     position: 'absolute',

@@ -51,6 +51,7 @@ const styles = StyleSheet.create({
     marginTop: 16,
     borderBottomWidth: 1,
     borderBottomColor: Colors.grey300,
+    backgroundColor: 'white',
   },
   textContainer: {marginLeft: 8},
   title: {

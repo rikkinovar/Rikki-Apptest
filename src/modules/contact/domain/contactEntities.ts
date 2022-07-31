@@ -16,4 +16,6 @@ export interface ICreateContacParams {
 export interface IContactRepository {
   getContactList: () => Promise<IContact[] | undefined>;
   addContact: (param: ICreateContacParams) => Promise<any>;
+  updateContact: (param: ICreateContacParams, id: string) => Promise<any>;
+  deleteContact: (id: string) => Promise<any>;
 }

@@ -4,35 +4,56 @@ import {View, StyleSheet} from 'react-native';
 import {TextInput, Button} from 'react-native-paper';
 import {Action, State} from '../../../../../libraries/reducers';
 import {StackParamList} from '../../../../../navigation/RootNavigator';
-import {addContactRequest} from '../../../data/contact.action';
+import {
+  addContactRequest,
+  updateContactRequest,
+} from '../../../data/contact.action';
 import {ICreateContacParams} from '../../../domain/contactEntities';
 
 interface Props {
   onCallApi: (action: Action) => {};
   navigationProp: StackScreenProps<StackParamList, 'ContactFormScreen'>;
   addContact: State;
+  updateContact: State;
 }
 
 const ContactForm = (props: Props) => {
-  const {navigationProp, addContact, onCallApi} = props;
-  const {navigation} = navigationProp;
+  const {navigationProp, addContact, updateContact, onCallApi} = props;
+  const {navigation, route} = navigationProp;
 
-  const [firstname, setFirstname] = React.useState('');
-  const [lastname, setLastname] = React.useState('');
-  const [age, setAge] = React.useState<number>(0);
-  const [photo, setPhoto] = React.useState('');
+  const [firstname, setFirstname] = React.useState(
+    route.params.data?.firstName || '',
+  );
+  const [lastname, setLastname] = React.useState(
+    route.params.data?.lastName || '',
+  );
+  const [age, setAge] = React.useState<number>(route.params.data?.age || 0);
+  const [photo, setPhoto] = React.useState(route.params.data?.photo || '');
 
   const isValid = firstname && lastname && age && photo;
 
   const handleSubmit = () => {
-    const param: ICreateContacParams = {
-      firstName: firstname,
-      lastName: lastname,
-      age,
-      photo,
-    };
-    onCallApi(addContactRequest(param));
-    navigation.goBack();
+    if (route.params.data) {
+      const param: ICreateContacParams = {
+        firstName: firstname,
+        lastName: lastname,
+        age,
+        photo,
+      };
+      onCallApi(updateContactRequest(param, route.params.data.id));
+    } else {
+      const param: ICreateContacParams = {
+        firstName: firstname,
+        lastName: lastname,
+        age,
+        photo,
+      };
+      onCallApi(addContactRequest(param));
+    }
+    navigation.reset({
+      index: 0,
+      routes: [{name: 'ContactListScreen'}],
+    });
   };
 
   return (
@@ -76,15 +97,18 @@ const ContactForm = (props: Props) => {
           <Button
             mode="outlined"
             onPress={() => {
-              navigation.goBack();
+              navigation.reset({
+                index: 0,
+                routes: [{name: 'ContactListScreen'}],
+              });
             }}>
             Cancel
           </Button>
         </View>
         <View style={[styles.flex, styles.marginLeftSmall]}>
           <Button
-            disabled={addContact.fetching || !isValid}
-            loading={addContact.fetching}
+            disabled={addContact.fetching || !isValid || updateContact.fetching}
+            loading={addContact.fetching || updateContact.fetching}
             mode="contained"
             onPress={handleSubmit}>
             Save

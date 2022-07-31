@@ -2,7 +2,12 @@ import {
   IContactRepository,
   ICreateContacParams,
 } from '../domain/contactEntities';
-import {getContact, addContact as addContactApi} from './http/contact.http';
+import {
+  getContact,
+  addContact as addContactApi,
+  deleteContact as deleteContactApi,
+  updateContact as updateContactApi,
+} from './http/contact.http';
 
 const contactRepositoryImpl = (): IContactRepository => {
   const getContactList = async () => {
@@ -13,7 +18,15 @@ const contactRepositoryImpl = (): IContactRepository => {
     return await addContactApi(param);
   };
 
-  return {getContactList, addContact};
+  const deleteContact = async (id: string) => {
+    return await deleteContactApi(id);
+  };
+
+  const updateContact = async (param: ICreateContacParams, id: string) => {
+    return await updateContactApi(param, id);
+  };
+
+  return {getContactList, addContact, deleteContact, updateContact};
 };
 
 export default contactRepositoryImpl;
